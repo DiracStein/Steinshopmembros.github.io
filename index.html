@@ -52,6 +52,14 @@
     // Lista de PINWHEELs permitidos
     let allowedPins = ['123456789012345', '987654321098765', '524320547839971', '364782449692871','179535553776102','739688312745092'];
 
+    // Verificar se o PINWHEEL já foi gerado e armazenado
+    let userPin = localStorage.getItem('userPin');
+    if (!userPin) {
+      // Se não existe, gerar um novo PINWHEEL e armazenar no localStorage
+      userPin = generateUniquePin();
+      localStorage.setItem('userPin', userPin);
+    }
+
     // Carregar mensagens do localStorage
     let userMessages = JSON.parse(localStorage.getItem('userMessages')) || {};
     let lastMessageDate = {};
@@ -59,9 +67,12 @@
     // Contador de curtidas
     let likeCount = 0;
 
+    function generateUniquePin() {
+      // Substituir por lógica para gerar PINWHEEL exclusivo
+      return '123456789012345'; // Exemplo: Substituir por lógica de geração exclusiva
+    }
+
     function retrieveOrGeneratePin() {
-      let userPin = localStorage.getItem('userPin');
-      
       document.getElementById('pinwheelPage').innerHTML = `
         <h2>Seu PINWHEEL: ${userPin}</h2>
         <p><a href="https://nubank.com.br/cobrar/tezyu/65ac71d4-2e7b-41ee-9fc0-362977b08070" target="_blank">REALIZAR PIX</a></p>
@@ -130,23 +141,4 @@
     function searchKeywordMessages(keyword) {
       let foundMessages = [];
       for (let userCode in userMessages) {
-        if (userMessages.hasOwnProperty(userCode)) {
-          let userMessage = userMessages[userCode];
-          if (userMessage.message.includes(keyword)) {
-            foundMessages.push(`<p>${userCode}: ${userMessage.message}</p>`);
-          }
-        }
-      }
-      displayFoundMessages(foundMessages);
-    }
-
-    function displayFoundMessages(messages) {
-      let foundMessagesDiv = document.getElementById('foundMessages');
-      foundMessagesDiv.innerHTML = messages.length > 0 ?
-        `<h3>Mensagens Encontradas</h3>${messages.join('')}` :
-        `<h3>Nenhuma mensagem encontrada com a palavra-chave</h3>`;
-    }
-  </script>
-
-</body>
-</html>
+        if (userMessages.hasOwnProperty
